@@ -130,13 +130,13 @@ Because running this:
 Copy the local host url:
 *http://127.0.0.1:5000/*
 
-![1](flask_api_project\img\p6.png)
+![1](img6\p6.png)
 
  - Create a new request.
 
     - Set the request type to `POST` and enter `http://127.0.0.1:5000/users`.
     
-    ![1](flask_api_project\img\Py3.png)
+    ![1](img6\Py3.png)
 
     - Go to the Body tab, select `raw`, and choose `JSON` from the dropdown.
     - Enter the JSON data:
