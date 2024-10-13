@@ -4,6 +4,7 @@ Then, I picked on create a new VPC:
 
 VPC Details
 Following are the VPC details, region, and availability zones we will be using for our project.
+![alt text](<p7.png>)
 
 1. CIDR Block: 10.0.0.0/16
 2. Region: us-west-2
@@ -114,3 +115,42 @@ Note: Both the internet Gateway (IGW) and NAT gateway(NAT-GW) gets deployed in t
 
 To check our VPC topology:
 ![alt text](<p7_11.png>)
+
+# Network ACLs
+
+Network access control list (NACL) is the native VPC functionality to control the inbound and outbound traffic at the subnet level.
+
+In our architecture, the connection to the DB subnet should be allowed only from the App subnet and management subnet. The public subnet should not have direct access to the DB subnet.
+
+The following are the tables for inbound and outbound rules for the DB NACL.
+
+# DB NACL (Inbound Rules)
+
+| Rule Number | Type       | Protocol | Port Range | Source IP   | Allow/Deny |
+|-------------|------------|----------|------------|-------------|------------|
+| 100         | Custom TCP | TCP      | 3306       | 10.0.0.96/28 | Allow     |
+| 110         | Custom TCP | TCP      | 3306       | 10.0.0.112/28 | Allow    |
+| 120         | Custom TCP | TCP      | 3306       | 10.0.0.128/28 | Allow    |
+| *           | All Traffic| All      | All        | 0.0.0.0/0   | Deny       |
+
+
+# DB NACL (Outbound Rules)
+
+
+| Rule Number | Type       | Protocol | Port Range | Destination IP | Allow/Deny |
+|-------------|------------|----------|------------|----------------|------------|
+| 100         | Custom TCP | TCP      | 3306       | 10.0.0.192/28    | Allow    |
+| 110         | Custom TCP | TCP      | 3306       | 10.0.0.208/28    | Allow    |
+| 120         | Custom TCP | TCP      | 3306       | 10.0.0.224/28    | Allow    |
+| *           | All Traffic| All      | All        | 0.0.0.0/0        | Deny     |
+
+
+ The above table serves as a guide to how your implemetation would look like:
+ Here is a step by step on a Network ACLS:
+![alt text](<p7_12.png>)
+![alt text](<p7_13.png>)
+![alt text](<p7_14.png>)
+![alt text](<p7_15.png>)
+![alt text](<p7_16.png>)
+
+# End of Project 7
