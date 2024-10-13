@@ -136,7 +136,11 @@ Copy the local host url:
 
     - Set the request type to `POST` and enter `http://127.0.0.1:5000/users`.
     
+<<<<<<< HEAD
     ![1](img6\Py3.png)
+=======
+    ![2](img6\Py3.png)
+>>>>>>> cbc261912bd954c77a4f428a094474f230a0c514
 
     - Go to the Body tab, select `raw`, and choose `JSON` from the dropdown.
     - Enter the JSON data:
