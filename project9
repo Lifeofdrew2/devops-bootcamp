@@ -1,0 +1,172 @@
+## Project 9 Setup Documentation
+
+### Step 1: Provision an Ubuntu Instance
+Launch an Instance
+
+Provisioned an Ubuntu 24.04 instance on t2.micro to use for this project.
+SSH into the Instance
+
+SSH’ed into the Ubuntu instance to perform configurations.
+
+### Step 2: Install and Start Docker
+- Update Package Index
+```bash
+   sudo apt update
+```
+- Install Docker
+
+Installed Docker to enable containerization on the instance:
+```bash
+   sudo apt install docker.io -y
+```
+- Start Docker
+
+Started Docker and enabled it to launch at boot:
+```bash
+   sudo systemctl start docker
+   sudo systemctl enable docker
+```
+- Check Docker Status
+
+Verified that Docker is running:
+```bash
+   sudo systemctl status docker
+```
+Pressed Ctrl + C to exit the Docker status screen.
+
+ ![text](<p9.png>)
+
+### Step 3: Clone the Docker Project
+- Install Git
+
+Ensured Git is installed for cloning the project repository:
+ Install Git (if not installed):
+   ```bash
+   
+   sudo apt install git -y 
+   ```
+ ![text](<p9-2.png>)
+
+- Clone the project repository:
+ ```bash
+git clone https://github.com/TobiOlajumoke/docker-flask
+cd docker-flask
+```
+![text](<p9-3.png>)
+
+- The docker file 
+```bash
+cat dockerfile
+```
+![text](<p9-4.png>)
+
+### Step 4. **Run the Docker Application**
+
+1. **Build the Docker Image**:
+
+```bash
+   docker build -t flask-application:1.0.0 .
+```
+![alt text](<p9-5.png>)
+
+- Check if the image built
+
+```bash
+sudo docker images
+```
+![alt text](<p9-6.png>)
+
+2.  **Run the Docker Container**:
+```bash
+docker run -d -p 8000:8000 flask-application:1.0.0
+ ```
+ ![alt text](<p9-7.png>)
+
+Check if the container is running if it is PROCEED to 3
+
+```bash
+sudo docker ps
+```
+![alt text](<p9-8.png>) 
+
+# if the container isn't running check the list of all containers
+
+```bash
+sudo docker ps -a
+```
+
+To troubleshoot or find out why the container "exited" and isn't running you'll check the container logs by running this command 
+
+```bash
+sudo docker logs <container_id_or_name>
+
+```
+![alt text](<p9-9.png>)
+
+3.  Test in Browser
+Now, go to your browser and access your EC2 public IP to check if the app is running properly:
+
+```bash
+http://<your-ec2-public-ip>:8000
+```
+![alt text](<p9-10.png>)
+
+4. The webpage will not work, WHY?
+
+ we have not added the port 8000 to our security group of our instance so do that and try accessing  the EC2 public IP
+
+![alt text](<p9-11.png>)
+
+
+![alt text](<p9-12.png>)
+
+You have successfully deployed the Dockerized Flask app on an AWS EC2 instance. This is a common workflow in modern cloud infrastructure where applications are containerized for ease of deployment, scalability, and management.
+
+### Pushing Docker Images to Docker Hub
+
+After successfully building and running your Docker image, you may want to share it with others or deploy it to different environments. Docker Hub is a cloud-based registry service that allows you to store and distribute Docker images.
+
+#### **Step 1: Create a Docker Hub Account**
+
+1. Go to [Docker Hub](https://hub.docker.com/).
+2. Sign up for a free account if you don’t have one already.
+
+3. create a repo
+
+![alt text](<p9-13.png>)
+
+
+#### **Step 2: Log In to Docker Hub from Your Terminal**
+
+Use the Docker CLI to log in to your Docker Hub account:
+
+```bash
+sudo docker login
+```
+![alt text](<p9-14.png>)
+
+You will be prompted to enter your Docker Hub username and password.
+
+#### **Step 3: Tag Your Image**
+
+Before pushing the image, you need to tag it with your Docker Hub username and a repository name. The tagging format is:
+
+```bash
+sudo docker tag flask-application:1.0.0 lifeofdrew2/flask-application:1.0.0
+```
+#### **Step 4: Push the Image to Docker Hub**
+
+Once your image is tagged, you can push it to Docker Hub using the following command:
+
+```bash
+docker push lifeofdrew2/flask-application:1.0.0
+```
+![alt text](<p9-15.png>)
+
+After the push completes, you can verify that your image is on Docker Hub by visiting your Docker Hub profile and checking the repositories.
+
+![alt text](<p9-16.png>)
+![alt text](<p9-17.png>)
+
+---
+### Conclusion
